@@ -1,1 +1,299 @@
+import { ChevronRight, Eye, User, Menu } from 'lucide-react';
+import serasaLogo from 'figma:asset/1bceedb1db7e6b0d925c7a523d7bcaa48c9d5230.png';
+import { useState } from 'react';
+import { Sheet, SheetContent, SheetTrigger } from './ui/sheet';
+
+interface HomeScreenProps {
+  onNavigate: (screen: 'home' | 'search' | 'menu' | 'profile' | 'contact') => void;
+  onShowFrustration: (message: string) => void;
+}
+
+export function HomeScreen({ onNavigate, onShowFrustration }: HomeScreenProps) {
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  const handleCancelSearch = () => {
+    onShowFrustration(
+      "😟 Frustração: Não encontrei a opção de cancelamento no app. Onde está?"
+    );
+  };
+
+  const handleConfigClick = () => {
+    setMenuOpen(false);
+    onNavigate('settings');
+  };
+
+  return (
+    <div className="bg-white">
+      {/* Header Premium */}
+      <div className="bg-gradient-to-r from-[#E4105D] to-[#D4145A] px-4 py-6 text-white relative">
+        {/* Logo Serasa e Menu */}
+        <div className="flex justify-between items-center mb-4">
+          <Sheet open={menuOpen} onOpenChange={setMenuOpen}>
+            <SheetTrigger asChild>
+              <button className="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center hover:bg-white/30 transition-colors">
+                <Menu size={20} />
+              </button>
+            </SheetTrigger>
+            <SheetContent side="left" className="w-[280px] p-0 bg-white">
+              <div className="bg-gradient-to-r from-[#E4105D] to-[#D4145A] px-4 py-6 text-white">
+                <img src={serasaLogo} alt="Serasa" className="h-6 mb-4" />
+                <div className="flex items-center gap-3">
+                  <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center text-2xl">
+                    👤
+                  </div>
+                  <div>
+                    <p className="text-sm">Marcos Filipe</p>
+                    <p className="text-xs opacity-90">Premium</p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="px-4 py-6">
+                <p className="text-xs text-gray-500 mb-3">MENU</p>
+                
+                <div className="space-y-2">
+                  <button 
+                    onClick={() => {
+                      setMenuOpen(false);
+                      onNavigate('home');
+                    }}
+                    className="w-full text-left px-4 py-3 rounded-lg hover:bg-gray-100 transition-colors flex items-center gap-3"
+                  >
+                    <span className="text-lg">🏠</span>
+                    <span className="text-sm">Início</span>
+                  </button>
+
+                  <button 
+                    onClick={() => {
+                      setMenuOpen(false);
+                      onNavigate('profile');
+                    }}
+                    className="w-full text-left px-4 py-3 rounded-lg hover:bg-gray-100 transition-colors flex items-center gap-3"
+                  >
+                    <span className="text-lg">👤</span>
+                    <span className="text-sm">Meu perfil</span>
+                  </button>
+
+                  <button className="w-full text-left px-4 py-3 rounded-lg hover:bg-gray-100 transition-colors flex items-center gap-3">
+                    <span className="text-lg">🔔</span>
+                    <span className="text-sm">Notificações</span>
+                  </button>
+
+                  <button className="w-full text-left px-4 py-3 rounded-lg hover:bg-gray-100 transition-colors flex items-center gap-3">
+                    <span className="text-lg">🔒</span>
+                    <span className="text-sm">Privacidade</span>
+                  </button>
+
+                  <button 
+                    onClick={handleConfigClick}
+                    className="w-full text-left px-4 py-3 rounded-lg hover:bg-gray-100 transition-colors flex items-center gap-3"
+                  >
+                    <span className="text-lg">⚙️</span>
+                    <span className="text-sm">Configurações</span>
+                  </button>
+
+                  <button className="w-full text-left px-4 py-3 rounded-lg hover:bg-gray-100 transition-colors flex items-center gap-3">
+                    <span className="text-lg">❓</span>
+                    <span className="text-sm">Central de ajuda</span>
+                  </button>
+
+                  <button 
+                    onClick={() => {
+                      setMenuOpen(false);
+                      onNavigate('contact');
+                    }}
+                    className="w-full text-left px-4 py-3 rounded-lg hover:bg-gray-100 transition-colors flex items-center gap-3"
+                  >
+                    <span className="text-lg">📞</span>
+                    <span className="text-sm">Fale conosco</span>
+                  </button>
+
+                  <button className="w-full text-left px-4 py-3 rounded-lg hover:bg-gray-100 transition-colors flex items-center gap-3">
+                    <span className="text-lg">ℹ️</span>
+                    <span className="text-sm">Sobre o app</span>
+                  </button>
+                </div>
+
+                {/* Área Premium - sem opção de cancelar */}
+                <div className="mt-6 bg-gradient-to-r from-[#E4105D] to-[#D4145A] rounded-lg p-4 text-white">
+                  <div className="flex items-center gap-3 mb-3">
+                    <span className="text-2xl">💎</span>
+                    <div>
+                      <p className="text-sm">Serasa Premium</p>
+                      <p className="text-xs opacity-90">Assinatura ativa</p>
+                    </div>
+                  </div>
+                  <div className="space-y-2">
+                    <button className="w-full bg-white/20 rounded-lg py-2 text-xs hover:bg-white/30 transition-colors">
+                      Ver benefícios
+                    </button>
+                    <button className="w-full bg-white/20 rounded-lg py-2 text-xs hover:bg-white/30 transition-colors">
+                      Indicar amigos
+                    </button>
+                  </div>
+                  
+                  {/* Nota de problema */}
+                  <div className="mt-3 bg-white/10 rounded p-2 text-xs">
+                    ⚠️ Sem opção "Cancelar assinatura"
+                  </div>
+                </div>
+              </div>
+            </SheetContent>
+          </Sheet>
+
+          <img src={serasaLogo} alt="Serasa" className="h-8" />
+          
+          <button 
+            onClick={() => onNavigate('profile')}
+            className="w-10 h-10 bg-white rounded-full flex items-center justify-center hover:opacity-90 transition-opacity"
+          >
+            <User size={20} className="text-[#E4105D]" />
+          </button>
+        </div>
+        
+        <div className="flex justify-between items-center">
+          <div>
+            <p className="text-sm opacity-90">Carteira Serasa</p>
+            <p className="text-2xl">R$ 26,26</p>
+          </div>
+          <button className="bg-white text-[#E4105D] px-4 py-2 rounded-lg text-sm hover:bg-gray-100 transition-colors">
+            Pagar contas
+          </button>
+        </div>
+      </div>
+
+      {/* Menu de ícones */}
+      <div className="grid grid-cols-4 gap-4 px-4 py-6 bg-gray-50">
+        <button className="flex flex-col items-center gap-2 text-gray-600 hover:text-gray-900 transition-colors">
+          <div className="w-12 h-12 bg-white rounded-lg shadow-sm flex items-center justify-center">
+            📱
+          </div>
+          <span className="text-xs text-center">Negociar dívidas</span>
+        </button>
+        <button className="flex flex-col items-center gap-2 text-gray-600 hover:text-gray-900 transition-colors">
+          <div className="w-12 h-12 bg-white rounded-lg shadow-sm flex items-center justify-center">
+            💳
+          </div>
+          <span className="text-xs text-center">Ofertas de cartão</span>
+        </button>
+        <button className="flex flex-col items-center gap-2 text-gray-600 hover:text-gray-900 transition-colors">
+          <div className="w-12 h-12 bg-white rounded-lg shadow-sm flex items-center justify-center">
+            ⭐
+          </div>
+          <span className="text-xs text-center">Resgatar meu Premium</span>
+        </button>
+        <button className="flex flex-col items-center gap-2 text-gray-600 hover:text-gray-900 transition-colors">
+          <div className="w-12 h-12 bg-white rounded-lg shadow-sm flex items-center justify-center">
+            💰
+          </div>
+          <span className="text-xs text-center">Consulta de empréstimo</span>
+        </button>
+      </div>
+
+      {/* Atualizações */}
+      <div className="px-4 py-4">
+        <h3 className="text-gray-700 mb-3">Atualizações dos seus pedidos</h3>
+        <div className="bg-white border border-gray-200 rounded-lg p-4 flex items-center gap-3 hover:border-gray-300 transition-colors cursor-pointer">
+          <div className="w-10 h-10 bg-[#E4105D]/10 rounded flex items-center justify-center">
+            🎁
+          </div>
+          <div className="flex-1">
+            <p className="text-sm">Promoção Mão na Roda</p>
+            <p className="text-xs text-gray-500">Resgate os seus números da sorte</p>
+          </div>
+        </div>
+      </div>
+
+      {/* Serasa Score */}
+      <div className="px-4 py-4">
+        <h3 className="text-gray-700 mb-3">Entenda seu momento financeiro</h3>
+        
+        <div className="bg-white border border-gray-200 rounded-lg p-4 hover:border-gray-300 transition-colors cursor-pointer">
+          <div className="flex justify-between items-center mb-3">
+            <span className="text-sm text-gray-700">Serasa Score</span>
+            <ChevronRight size={20} className="text-gray-400" />
+          </div>
+          
+          <div className="mb-3">
+            <p className="text-4xl text-[#0066CC] mb-1">921</p>
+            <p className="text-sm text-green-600">Excelente</p>
+          </div>
+          
+          {/* Barra de progresso */}
+          <div className="relative h-2 bg-gray-200 rounded-full mb-4">
+            <div className="absolute h-full bg-gradient-to-r from-red-500 via-yellow-500 to-green-500 rounded-full" style={{ width: '92.1%' }}></div>
+          </div>
+          
+          <div className="flex justify-between text-xs text-gray-500 mb-4">
+            <span>0</span>
+            <span>500</span>
+            <span>1000</span>
+          </div>
+
+          <div className="bg-blue-50 rounded-lg p-3 flex items-center gap-3">
+            <div className="w-8 h-8 bg-[#0066CC] rounded-full flex items-center justify-center text-white">
+              🔒
+            </div>
+            <div className="flex-1">
+              <p className="text-sm">Serasa Score bloqueado</p>
+              <p className="text-xs text-gray-600">Empresas não podem ver seu score</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Botão de busca - ponto de frustração */}
+      <div className="px-4 py-4">
+        <button 
+          onClick={handleCancelSearch}
+          className="w-full bg-[#0066CC] text-white py-3 rounded-lg flex items-center justify-center gap-2 hover:bg-[#0052A3] transition-colors relative"
+        >
+          <span>🔍</span>
+          <span>Procurar "cancelar premium"</span>
+          <span className="absolute -top-2 -right-2 w-6 h-6 bg-red-500 rounded-full text-white text-xs flex items-center justify-center">
+            ⚠️
+          </span>
+        </button>
+      </div>
+
+      {/* Bottom Navigation */}
+      <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 px-4 py-2 grid grid-cols-5 gap-1 max-w-md mx-auto">
+        <button className="flex flex-col items-center gap-1 py-2 text-[#E4105D]">
+          <div className="w-6 h-6 flex items-center justify-center">🏠</div>
+          <span className="text-xs">Início</span>
+        </button>
+        <button 
+          onClick={() => onNavigate('search')}
+          className="flex flex-col items-center gap-1 py-2 text-gray-500 hover:text-gray-700 transition-colors"
+        >
+          <div className="w-6 h-6 flex items-center justify-center">🔧</div>
+          <span className="text-xs">Serviços</span>
+        </button>
+        <button className="flex flex-col items-center gap-1 py-2 text-white relative -mt-4">
+          <div className="w-14 h-14 bg-[#0066CC] rounded-2xl flex items-center justify-center shadow-lg hover:bg-[#0052A3] transition-colors">
+            <span className="text-2xl">💎</span>
+          </div>
+          <span className="text-xs text-gray-500 mt-1">Meu CPF</span>
+        </button>
+        <button 
+          onClick={() => setMenuOpen(true)}
+          className="flex flex-col items-center gap-1 py-2 text-gray-500 hover:text-gray-700 transition-colors"
+        >
+          <div className="w-6 h-6 flex items-center justify-center">📊</div>
+          <span className="text-xs">Menu</span>
+        </button>
+        <button 
+          onClick={() => onNavigate('profile')}
+          className="flex flex-col items-center gap-1 py-2 text-gray-500 hover:text-gray-700 transition-colors"
+        >
+          <div className="w-6 h-6 flex items-center justify-center">👤</div>
+          <span className="text-xs">Perfil</span>
+        </button>
+      </div>
+      
+      {/* Espaço para a navegação */}
+      <div className="h-20"></div>
+    </div>
+  );
+}
 
